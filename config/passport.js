@@ -1,8 +1,7 @@
-import express from 'express'
-import strategy, { Strategy } from 'passport-google-oauth20'
+import strategy from 'passport-google-oauth20'
 import passport from 'passport'
 import dotenv from 'dotenv'
-import {userAuthModel,userModel} from '../models/model.js';
+import userAuthModel from '../models/userAuthModel';
 import bcrypt from 'bcrypt';
 dotenv.config();
 

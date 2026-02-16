@@ -1,5 +1,6 @@
 import authServices from "../services/authServices.js";
-const {getSignupUser,getLoginUser}=authServices;
+
+const {getSignupUser,getLoginUser,oauthResponse}=authServices;
 
 const authSignup=async(req,res)=>{
     try {
@@ -21,4 +22,15 @@ const authLogin=async(req,res)=>{
     }
 }
 
-export default {authLogin,authSignup};
+const googleOauth=async(req,res)=>{
+    try {
+        const user=req.user;
+        const googleResponse=await oauthResponse(user);
+        return res.status(200).json({message:googleResponse.message});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message:'Internal server error'});
+    }
+}
+
+export default {authLogin,authSignup,googleOauth};

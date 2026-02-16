@@ -41,4 +41,14 @@ const getLoginUser=async({email,password})=>{
     }
 }
 
-export default {getSignupUser,getLoginUser};
+const oauthResponse=async(user)=>{
+    try {
+        const token=jwt.sign({userId:user._id,name:user.name,email:user.email,role:user.role});
+        return {message:token};
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export default {getSignupUser,getLoginUser,oauthResponse};
