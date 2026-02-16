@@ -1,5 +1,6 @@
-import summaryResponse from '../services/ollamaSummaryService';
+import summaryResponses from '../services/ollamaSummaryService.js';
 
+const {summaryResponse,textFileSummaryResponse}=summaryResponses;
 const fileSummary=async(req,res)=>{
     try {
         const fileUploaded=await summaryResponse(req.file);

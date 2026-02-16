@@ -20,6 +20,4 @@ route.post('/jobs/save/:jobId',verifyToken,saveJobs);
 route.get('/jobs/applied/:userId',verifyToken,userJobs);
 route.get('/jobs/saved/:userId',verifyToken,userJobsSaved);
 
-
-
 export default route;

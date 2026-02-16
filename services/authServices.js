@@ -4,13 +4,12 @@ import dotenv from 'dotenv';
 import userAuthModel from '../models/userAuthModel.js';
 dotenv.config();
 
-const getSignupUser=async({name,email,password})=>{
+const getSignupUser=async({name,email,password,role})=>{
     try {
         const isemail=await userAuthModel.findOne({email});
         if(isemail){
             return {message:"Email already exists"};
         }
-        let role='Applicant';
         if(email===process.env.admin_email)role='Admin'
         const ispassword=await bcrypt.hash(password,10);
         const newUserAuth=new userAuthModel({name:name,email:email,password:ispassword,role:role});

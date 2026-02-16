@@ -8,16 +8,16 @@ dotenv.config();
 
 const fetchJobs=async({location,title})=>{
     try {
-        let jobResponse="";
         options.params.location=location || "India";
         options.params.query=title || "Technology";
 
         const jobDB=await jobModel.find({location:location});
-        if(jobDB.length!==0)jobResponse=jobDB;
+        if(jobDB.length>0)return {message:jobDB};
 
+        /*
         const response=await axios.get(process.env.job_url,options);
         if(response)jobResponse=response.data;
-
+        
         const apiResponse=JSON.parse(response.data);
         apiResponse.map(async(j)=>{
             const jobId=j.id;
@@ -26,8 +26,7 @@ const fetchJobs=async({location,title})=>{
                 const newJob=new jobModel({title:j.title,company:j.company,jobId:j.id,location:j.location,jobPosted:j.postedTimeAgo,postedBy:j.jobProvider});
                 await newJob.save();    
             }
-        })
-        return jobResponse;
+        })*/
     } catch (error) {
         console.log(error)
         return null;
