@@ -80,11 +80,19 @@ const editJobs=async({id,title,company,location,jobPosted,postedBy},jobId,userId
 
 const jobApplication=async(jobId,userId)=>{
     try {
-        const isJob=await jobModel.findOne({jobId});
+        const isJob=await jobModel.findOne({_id:jobId});
         if(!isJob)return {message:"Job not found"};
-        const jobapply=new jobAppliedModel({userId,jobId,applied:true,appliedDate:Date.now});
-        await jobapply.save();
-        return {message:"Job applied successfully"};
+
+        const jobApplied=await jobAppliedModel.findOne({userId:userId,jobId:jobId});
+        if(jobApplied){
+            if(jobApplied.applied===false){
+                jobApplied.applied=true;
+            }else return{message:"Job already applied"}
+        }
+        else{
+            const newJobApplied=await jobAppliedModel({userId,jobId,applied:true,appliedDate:Date.now()});
+            await newJobApplied.save();
+        }
     } catch (error) {
         console.log(error);
         return null;
@@ -93,9 +101,14 @@ const jobApplication=async(jobId,userId)=>{
 
 const savedJobs=async(jobId,userId)=>{
     try {
-        const isjob=await jobModel.findOne({jobId});
+        const isjob=await jobModel.findOne({_id:jobId});
         if(!isjob)return {message:"Job not found"};
-        const jobsave=new jobAppliedModel({userId,jobId,saved:true,appliedDate:Date.now});
+        
+        const jobSaved=await jobAppliedModel({userId:userId,jobId:jobId});
+        if(jobSaved){
+            return {message:"Job already applied/saved"};
+        }
+        const jobsave=new jobAppliedModel({userId,jobId,saved:true,appliedDate:Date.now()});
         await jobsave.save();
         return {message:"Job saved successfully"};
     } catch (error) {

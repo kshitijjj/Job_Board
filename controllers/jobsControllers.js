@@ -48,7 +48,7 @@ const updateJobs=async(req,res)=>{
 const applyJobs=async(req,res)=>{
     try {
         const userId=req.user.userId;
-        const jobApply=await jobApplication(req.params.jobId,userId);
+        const jobApply=await jobApplication(req.body.jobId,userId);
         return res.status(200).json({message:jobApply.message});
     } catch (error) {
         console.log(error);
@@ -59,7 +59,7 @@ const applyJobs=async(req,res)=>{
 const saveJobs=async(req,res)=>{
     try {
         const userId=req.user.userId;
-        const jobSaved=await savedJobs(req.params.jobId,userId);
+        const jobSaved=await savedJobs(req.body.jobId,userId);
         return res.status(200).json({message:jobSaved.message});
     } catch (error) {
         console.log(error);

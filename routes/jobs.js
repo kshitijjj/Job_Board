@@ -15,8 +15,8 @@ route.delete('/jobs/delete/:jobId',verifyToken,restrictedAccess,removeJobs);
 route.put('/jobs/edit/:jobId',verifyToken,restrictedAccess,updateJobs);
 
 // ONLY FOR APPLICANTS ROUTES
-route.post('/jobs/apply/:jobId',verifyToken,applyJobs);
-route.post('/jobs/save/:jobId',verifyToken,saveJobs);
+route.post('/jobs/apply',verifyToken,applyJobs);
+route.post('/jobs/save',verifyToken,saveJobs);
 route.get('/jobs/applied/:userId',verifyToken,userJobs);
 route.get('/jobs/saved/:userId',verifyToken,userJobsSaved);
 
