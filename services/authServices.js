@@ -10,10 +10,12 @@ const getSignupUser=async({name,email,password})=>{
         if(isemail){
             return {message:"Email already exists"};
         }
+        let role='Applicant';
+        if(email===process.env.admin_email)role='Admin'
         const ispassword=await bcrypt.hash(password,10);
-        const newUserAuth=new userAuthModel({name:name,email:email,password:ispassword});
+        const newUserAuth=new userAuthModel({name:name,email:email,password:ispassword,role:role});
         await newUserAuth.save();
-        const token=await jwt.sign({userId:newUserAuth._id,name:newUserAuth.name,email:newUserAuth.email},process.env.SECRET_KEY);
+        const token=await jwt.sign({userId:newUserAuth._id,name:newUserAuth.name,email:newUserAuth.email,role:newUserAuth.role},process.env.SECRET_KEY);
         return {message:"New user Signup Successfully","token":token};
     } catch (error) {
         console.log(error);
