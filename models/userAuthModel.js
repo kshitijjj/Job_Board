@@ -14,7 +14,9 @@ const userAuthSchema=new mongoose.Schema({
         required:true
     },
     role:{
-        type:String
+        type:String,
+        required:true,
+        default:'Applicant'
     }
 })
 const userAuthModel=mongoose.model('userAuthModel',userAuthSchema);
