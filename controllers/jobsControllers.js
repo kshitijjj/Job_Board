@@ -5,7 +5,7 @@ const {fetchJobs,postJobs,deleteJob,editJobs,jobApplication,savedJobs,userApplic
 const getJobs=async(req,res)=>{
     try {
         const jobsList=await fetchJobs(req.query);
-        return res.status(200).json({message:jobsList});
+        return res.status(200).json(jobsList);
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:'Internal Server Error'});

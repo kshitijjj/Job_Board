@@ -6,27 +6,27 @@ import jobPostModel from '../models/jobPostModel.js'
 import jobAppliedModel from '../models/jobApplied.js'
 dotenv.config();
 
-const fetchJobs=async({location,title})=>{
+const fetchJobs=async({location="India",query="technology"})=>{
     try {
         options.params.location=location || "India";
-        options.params.query=title || "Technology";
+        options.params.query=query || "Technology";
 
-        const jobDB=await jobModel.find({location:location});
+        const jobDB=await jobModel.find({location:location,category:query});
         if(jobDB.length>0)return {message:jobDB};
 
-        /*
-        const response=await axios.get(process.env.job_url,options);
-        if(response)jobResponse=response.data;
-        
-        const apiResponse=JSON.parse(response.data);
-        apiResponse.map(async(j)=>{
+        const response=await axios.get(process.env.job_url,options);        
+        const apiResponse=response.data.data;
+
+        for (const j of apiResponse){
             const jobId=j.id;
             const ifexist=await jobModel.findOne({jobId});
             if(!ifexist){
-                const newJob=new jobModel({title:j.title,company:j.company,jobId:j.id,location:j.location,jobPosted:j.postedTimeAgo,postedBy:j.jobProvider});
+                const newJob=new jobModel({title:j.title,company:j.company,jobId:j.id,location:j.location,category:query,jobPosted:j.postedTimeAgo,postedBy:j.jobProvider});
                 await newJob.save();    
             }
-        })*/
+        }
+        const dbApiResponse=await jobModel.find({location:location,category:query});
+        return {message:dbApiResponse};
     } catch (error) {
         console.log(error)
         return null;
