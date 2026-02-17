@@ -26,11 +26,13 @@ const googleOauth=async(req,res)=>{
     try {
         const user=req.user;
         const googleResponse=await oauthResponse(user);
-        return res.status(200).json({message:googleResponse.message});
+        return res.status(200).json({meesage:googleResponse.message,token:googleResponse.token});
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:'Internal server error'});
     }
 }
+
+
 
 export default {authLogin,authSignup,googleOauth};

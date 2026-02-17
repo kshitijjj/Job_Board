@@ -42,12 +42,13 @@ const getLoginUser=async({email,password})=>{
 
 const oauthResponse=async(user)=>{
     try {
-        const token=jwt.sign({userId:user._id,name:user.name,email:user.email,role:user.role});
-        return {message:token};
+        const token=jwt.sign({userId:user._id,name:user.name,email:user.email,role:user.role},process.env.SECRET_KEY);
+        return {message:{name:user[0].name,email:user[0].email},"token":token};
     } catch (error) {
         console.log(error);
         return null;
     }
 }
+
 
 export default {getSignupUser,getLoginUser,oauthResponse};
